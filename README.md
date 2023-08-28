@@ -55,6 +55,7 @@ $ echo "go mod vendor"
 
 ## Features
 
+- support [gin](https://github.com/gin-gonic/gin) mock test
 - [ ] more perfect test case coverage
 - [ ] more perfect benchmark case
 

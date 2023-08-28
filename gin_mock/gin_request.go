@@ -164,7 +164,12 @@ func (g *ginMock) BodyJson(body interface{}) GinMock {
 	return g
 }
 
-func (g *ginMock) BodyFileForm(fileName string, fieldName string, param interface{}) GinMock {
+// BodyFileSingleForm only send single file
+//   - fileName is the file path name, param is the form field key `file_name`
+//   - fieldName is the form field name, param is the form field key `upload_name`
+//   - if param is nil, will not send file
+//   - will auto add "Content-Type" header "multipart/form-data"
+func (g *ginMock) BodyFileSingleForm(fileName string, fieldName string, param interface{}) GinMock {
 	request, api, err := makeFileRequest(g.method, g.fullUrl, fileName, fieldName, param)
 	if err != nil {
 		if g.t != nil {
@@ -176,6 +181,19 @@ func (g *ginMock) BodyFileForm(fileName string, fieldName string, param interfac
 	g.request = request
 	g.fullUrl = api
 	return g
+}
+
+// Request
+//   - if request is nil, will call Body() first or BodyJson() first
+func (g *ginMock) Request() *http.Request {
+	if g.request == nil {
+		if g.t != nil {
+			g.t.Fatalf("please call Method Body() first")
+		} else {
+			panic(ErrNotSetTesting)
+		}
+	}
+	return g.request
 }
 
 // Header
@@ -209,7 +227,9 @@ type GinMock interface {
 
 	BodyJson(body interface{}) GinMock
 
-	BodyFileForm(fileName string, fieldName string, param interface{}) GinMock
+	Request() *http.Request
+
+	BodyFileSingleForm(fileName string, fieldName string, param interface{}) GinMock
 
 	Header(header map[string]string) GinMock
 

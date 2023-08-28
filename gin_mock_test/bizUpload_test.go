@@ -45,7 +45,7 @@ func TestSaveFileHandler(t *testing.T) {
 			ginMock := gin_mock.NewGinMock(t, ginEngine, apiBasePath, tc.path)
 			recorder := ginMock.
 				Method(http.MethodPost).
-				BodyFileForm(tc.fileName, tc.uploadName, param).
+				BodyFileSingleForm(tc.fileName, tc.uploadName, param).
 				Header(tc.header).
 				NewRecorder()
 			if tc.wantErr {
