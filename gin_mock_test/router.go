@@ -1,4 +1,4 @@
-package gin_mock_case
+package gin_mock_test
 
 import (
 	"github.com/gin-gonic/gin"
@@ -7,8 +7,8 @@ import (
 )
 
 //nolint:golint,unused
-func router(g *gin.Engine, basePath string) {
-	bizRouteGroup := g.Group(basePath + "/biz")
+func Router(g *gin.Engine, basePath string) {
+	bizRouteGroup := g.Group(basePath + "/Biz")
 	{
 		bizRouteGroup.GET("/string", getString)
 		bizRouteGroup.GET("/path/:some_id", getPath)
@@ -25,7 +25,7 @@ func router(g *gin.Engine, basePath string) {
 
 //nolint:golint,unused
 func getString(c *gin.Context) {
-	message := "this is biz message"
+	message := "this is Biz message"
 	c.String(http.StatusOK, message)
 }
 
@@ -36,7 +36,7 @@ func getPath(c *gin.Context) {
 		jsonErr(c, nil, "id not found")
 		return
 	}
-	resp := biz{
+	resp := Biz{
 		Id: id,
 	}
 	jsonSuccess(c, resp)
@@ -49,7 +49,7 @@ func getQuery(c *gin.Context) {
 		jsonErr(c, err)
 		return
 	}
-	resp := biz{
+	resp := Biz{
 		Offset: offset,
 		Limit:  limit,
 	}
@@ -58,7 +58,7 @@ func getQuery(c *gin.Context) {
 
 //nolint:golint,unused
 func getJSON(c *gin.Context) {
-	resp := biz{
+	resp := Biz{
 		Info: "message",
 	}
 	jsonSuccess(c, struct {
@@ -88,7 +88,7 @@ func postForm(c *gin.Context) {
 
 //nolint:golint,unused
 func postJsonModelBiz(c *gin.Context) {
-	var req biz
+	var req Biz
 	if err := c.BindJSON(&req); err != nil {
 		jsonErr(c, err)
 		return
@@ -107,7 +107,7 @@ func postQueryJsonMode(c *gin.Context) {
 		jsonErr(c, err)
 		return
 	}
-	var req biz
+	var req Biz
 	if errBind := c.BindJSON(&req); errBind != nil {
 		jsonErr(c, err)
 		return

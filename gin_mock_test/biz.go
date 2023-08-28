@@ -1,7 +1,7 @@
-package gin_mock_case
+package gin_mock_test
 
 //nolint:golint,unused
-type biz struct {
+type Biz struct {
 	Info   string `json:"info,omitempty" example:"input info here" default:"info"`
 	Id     string `json:"id,omitempty"  example:"id123zqqeeadg24qasd" default:"id123zqqeeadg24qasd"`
 	Offset int    `json:"offset,omitempty" example:"0" default:"0"`
@@ -9,7 +9,7 @@ type biz struct {
 }
 
 //nolint:golint,unused
-type fileRequest struct {
+type FileRequest struct {
 	FileName   string `json:"file_name" form:"file_name" binding:"required"`
 	UploadName string `json:"upload_name" form:"upload_name" binding:"required"`
 }

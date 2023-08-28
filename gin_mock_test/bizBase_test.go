@@ -1,4 +1,4 @@
-package gin_mock_case
+package gin_mock_test_test
 
 import (
 	"github.com/sebdah/goldie/v2"
@@ -22,17 +22,17 @@ func TestGetPath(t *testing.T) {
 	}{
 		{
 			name:     "sample 123",
-			path:     "/biz/path/123",
+			path:     "/Biz/path/123",
 			respCode: http.StatusOK,
 		},
 		{
 			name:     "sample 567",
-			path:     "/biz/path/567",
+			path:     "/Biz/path/567",
 			respCode: http.StatusOK,
 		},
 		{
 			name:     "StatusNotFound",
-			path:     "/biz/path/",
+			path:     "/Biz/path/",
 			respCode: http.StatusNotFound,
 		},
 	}
@@ -82,7 +82,7 @@ func TestGetQuery(t *testing.T) {
 	}{
 		{
 			name: "sample", // testdata/TestGetQuery/sample.golden
-			path: "/biz/query",
+			path: "/Biz/query",
 			query: query{
 				Offset: "0",
 				Limit:  "10",
@@ -91,7 +91,7 @@ func TestGetQuery(t *testing.T) {
 		},
 		{
 			name: "fail offset", // testdata/TestGetQuery/sample.golden
-			path: "/biz/query",
+			path: "/Biz/query",
 			query: query{
 				Offset: "a",
 				Limit:  "10",
@@ -100,7 +100,7 @@ func TestGetQuery(t *testing.T) {
 		},
 		{
 			name: "fail limit", // testdata/TestGetQuery/sample.golden
-			path: "/biz/query",
+			path: "/Biz/query",
 			query: query{
 				Offset: "0",
 				Limit:  "abc",
@@ -109,7 +109,7 @@ func TestGetQuery(t *testing.T) {
 		},
 		{
 			name: "fail not exist url", // testdata/TestGetQuery/sample.golden
-			path: "/biz/query/",
+			path: "/Biz/query/",
 			query: query{
 				Offset: "0",
 				Limit:  "10",
@@ -143,11 +143,11 @@ func TestGetQuery(t *testing.T) {
 }
 
 func TestGetString(t *testing.T) {
-	ginMock := gin_mock.NewGinMock(t, basicRouter, basePath, "/biz/string")
+	ginMock := gin_mock.NewGinMock(t, basicRouter, basePath, "/Biz/string")
 	recorder := ginMock.
 		Method(http.MethodGet).
 		Body(nil).
 		NewRecorder()
 	assert.Equal(t, http.StatusOK, recorder.Code)
-	assert.Equal(t, "this is biz message", recorder.Body.String())
+	assert.Equal(t, "this is Biz message", recorder.Body.String())
 }

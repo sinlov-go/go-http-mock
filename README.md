@@ -11,7 +11,7 @@
 
 ## for what
 
-- this project used to github golang lib project
+- this project used to http test case mock for golang
 
 ## Contributing
 
@@ -74,10 +74,62 @@ $ echo "go mod vendor"
 
 ## usage
 
-- use this template, replace list below
-    - `github.com/sinlov-go/go-http-mock` to your package name
-    - `sinlov-go` to your owner name
-    - `go-http-mock` to your project name
+### gin mock
+
+- for [https://github.com/gin-gonic/gin](https://github.com/gin-gonic/gin) use package `"github.com/sinlov-go/go-http-mock/gin_mock"`
+- you can use `gin_mock.MockEngine` to init mock `gin.Engine`
+
+```go
+package gin_mock_test
+
+import (
+    "github.com/gin-gonic/gin"
+    "github.com/sinlov-go/go-http-mock/gin_mock"
+)
+
+var (
+    basePath    = "/api/v1"
+    basicRouter *gin.Engine
+)
+
+func init() {
+	basicRouter = setupTestRouter()
+	// bind gin router
+	router(basicRouter, basePath)
+}
+
+func setupTestRouter() *gin.Engine {
+	e := gin_mock.MockEngine(func(engine *gin.Engine) error {
+		return nil
+	})
+	return e
+}
+```
+
+- test case example
+
+```go
+package gin_mock_test_test
+
+import (
+	"github.com/sinlov-go/go-http-mock/gin_mock"
+	"github.com/stretchr/testify/assert"
+	"net/http"
+	"testing"
+)
+
+func TestGetString(t *testing.T) {
+	ginMock := gin_mock.NewGinMock(t, basicRouter, basePath, "/Biz/string")
+	recorder := ginMock.
+		Method(http.MethodGet).
+		Body(nil).
+		NewRecorder()
+	assert.Equal(t, http.StatusOK, recorder.Code)
+	assert.Equal(t, "this is Biz message", recorder.Body.String())
+}
+```
+
+- more example see package `github.com/sinlov-go/go-http-mock/gin_mock_test`
 
 # dev
 

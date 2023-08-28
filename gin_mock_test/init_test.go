@@ -1,8 +1,9 @@
-package gin_mock_case
+package gin_mock_test_test
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/sinlov-go/go-http-mock/gin_mock"
+	"github.com/sinlov-go/go-http-mock/gin_mock_test"
 )
 
 var (
@@ -12,7 +13,7 @@ var (
 
 func init() {
 	basicRouter = setupTestRouter()
-	router(basicRouter, basePath)
+	gin_mock_test.Router(basicRouter, basePath)
 }
 
 func setupTestRouter() *gin.Engine {

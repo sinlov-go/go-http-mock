@@ -1,4 +1,4 @@
-package gin_mock_case
+package gin_mock_test
 
 import (
 	"fmt"

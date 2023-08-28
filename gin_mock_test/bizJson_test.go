@@ -1,8 +1,9 @@
-package gin_mock_case
+package gin_mock_test_test
 
 import (
 	"github.com/sebdah/goldie/v2"
 	"github.com/sinlov-go/go-http-mock/gin_mock"
+	"github.com/sinlov-go/go-http-mock/gin_mock_test"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -22,7 +23,7 @@ func TestGetJSON(t *testing.T) {
 	}{
 		{
 			name:     "sample", // testdata/TestGetJSON/sample.golden
-			path:     "/biz/json",
+			path:     "/Biz/json",
 			respCode: http.StatusOK,
 		},
 	}
@@ -66,8 +67,8 @@ func TestPostJsonModelBiz(t *testing.T) {
 	}{
 		{
 			name: "sample", // testdata/TestPostJsonModelBiz/sample.golden
-			path: "/biz/modelBiz",
-			body: biz{
+			path: "/Biz/modelBiz",
+			body: gin_mock_test.Biz{
 				Info:   "input info here",
 				Id:     "foo",
 				Offset: 1,
@@ -77,7 +78,7 @@ func TestPostJsonModelBiz(t *testing.T) {
 		},
 		{
 			name: "error model", // testdata/TestPostJsonModelBiz/sample.golden
-			path: "/biz/modelBiz",
+			path: "/Biz/modelBiz",
 			body: struct {
 				Foo string `json:"foo"`
 			}{
@@ -127,12 +128,12 @@ func TestPostQueryJsonMode(t *testing.T) {
 	}{
 		{
 			name: "sample", // testdata/TestPostQueryJsonMode/sample.golden
-			path: "/biz/modelBizQuery",
-			query: biz{
+			path: "/Biz/modelBizQuery",
+			query: gin_mock_test.Biz{
 				Offset: 1,
 				Limit:  10,
 			},
-			body: biz{
+			body: gin_mock_test.Biz{
 				Info: "input info here",
 				Id:   "foo",
 			},
