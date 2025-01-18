@@ -1,14 +1,3 @@
----
-name: pull request
-about: New feature or request
-ref: ""
-title: '[Priority/Medium]'
-assignees: ''
-labels:
-  - Priority/Medium
-
----
-
 ### Checklist
 
 * [ ] I have read the [Contributor Guide](.github/CONTRIBUTING_DOC/CONTRIBUTING.md)
