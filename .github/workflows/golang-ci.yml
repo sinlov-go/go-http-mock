@@ -3,26 +3,26 @@ name: golang-ci
 on:
   workflow_call: # https://docs.github.com/actions/using-workflows/reusing-workflows#using-inputs-and-secrets-in-a-reusable-workflow
 
-permissions:
+permissions: # https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions#permissions
   contents: read
 
 jobs:
   golang-ci:
-    name: glang-ci
+    name: golang-ci
     strategy:
       matrix:
         go:
-         - '^1.19'
-         - '1.19.12'
+          - '^1.19'
+          - '1.19.12'
         os:
           - macos-latest
           - windows-latest
           - ubuntu-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Go SDK
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
           cache: false
@@ -35,19 +35,19 @@ jobs:
         run: go get -t -v ./...
 
       - name: Run go build
-        run: go build -v ./...
+        run: go build -v -tags test ./...
 
       - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v6
         with:
           # Require: The version of golangci-lint to use.
           # When `install-mode` is `binary` (default) the value can be v1.2 or v1.2.3 or `latest` to use the latest version.
           # When `install-mode` is `goinstall` the value can be v1.2.3, `latest`, or the hash of a commit.
-          # version: v1.50.0 for go verison 1.19+
-          # version: v1.45.2 for go verison 1.18+
-          # version: v1.42.1 for go verison 1.17+
-          # version: v1.41.0 for go verison 1.16+
-          version: v1.53.2
+          # version: v1.50.0 for go version 1.19+
+          # version: v1.45.2 for go version 1.18+
+          # version: v1.42.1 for go version 1.17+
+          # version: v1.41.0 for go version 1.16+
+          version: latest
 
           # Optional: working directory, useful for monorepos
           # working-directory: somedir
@@ -75,12 +75,12 @@ jobs:
           # install-mode: "goinstall"
 
       - name: Run test
-        run: go test -v ./...
+        run: go test -v -tags test ./...
 
       - name: Run test benchmark
-        run: go test -run none -bench . -benchmem -v ./...
+        run: go test -run none -tags test -bench . -benchmem -v ./...
 
       - name: Run test coverage
         run: |
-          go test -cover -coverprofile coverage.txt -covermode count -coverpkg ./... -tags test -v ./...
+          go test -cover -tags test -coverprofile coverage.txt -covermode count -coverpkg ./... -v ./...
           go tool cover -func coverage.txt

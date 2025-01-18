@@ -5,13 +5,17 @@ on:
     paths-ignore:
       - '**/README.md'
     branches:
-      - 'main'
+      # - 'main'
       - 'release-*'
-      - 'FE-*'
+      - '*-feature-*'
+      - '*-enhancement-*'
+      - '*-hotfix-*'
+      - '*-bug-*'
+      - '*-documentation-*'
       - 'BF-*'
+      - 'FE-*'
       - 'PU-*'
       - 'DOC-*'
-      - 'hotfix-*'
     tags:
       - '*' # Push events to matching *, i.e. 1.0.0 v1.0, v20.15.10
   pull_request:
@@ -21,13 +25,13 @@ on:
       - opened
       - reopened
       - closed
-    branches:
-      - 'main'
-      - 'release-*'
-      - 'DOC-*'
-      - 'hotfix-*'
+    # branches:
+    #   - 'main'
+    #   - 'release-*'
+    #   - 'DOC-*'
+    #   - 'hotfix-*'
 
-permissions:
+permissions: # https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions#permissions
   contents: write
   discussions: write
 
@@ -39,32 +43,34 @@ jobs:
   golang-ci:
     name: golang-ci
     needs:
-     - version
+      - version
     uses: ./.github/workflows/golang-ci.yml
     secrets: inherit
 
   go-build-check-main:
     name: go-build-check-main
     needs:
-     - version
-     - golang-ci
+      - version
+      - golang-ci
     if: ${{ ( github.event_name == 'push' && github.ref == 'refs/heads/main' ) || github.base_ref == 'main' }}
     uses: ./.github/workflows/go-release-platform.yml
     secrets: inherit
     with:
-      verison_name: latest
+      version_name: latest
+      go_build_id: ${{ needs.version.outputs.short_sha }}
 
   go-release-platform:
     name: go-release-platform
     needs:
-     - version
-     - golang-ci
+      - version
+      - golang-ci
     if: startsWith(github.ref, 'refs/tags/')
     uses: ./.github/workflows/go-release-platform.yml
     secrets: inherit
     with:
-      verison_name: ${{ needs.version.outputs.tag_name }}
-      upload_artifact_name: go-release
+      version_name: ${{ needs.version.outputs.tag_name }}
+      go_build_id: ${{ needs.version.outputs.short_sha }}
+      # upload_artifact_name: go-release
 
   deploy-tag:
     needs:
@@ -75,7 +81,8 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     secrets: inherit
     with:
+      dry_run: false # open/close dry run
       prerelease: true
       tag_name: ${{ needs.version.outputs.tag_name }}
       tag_changes: ${{ needs.version.outputs.cc_changes }}
-      download_artifact_name: go-release
+      # download_artifact_name: go-release # download artifact name, download from actions/upload-artifact, as: {download_artifact_name}-{tag_name}-*, empty is not download

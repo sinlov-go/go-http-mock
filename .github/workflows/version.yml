@@ -47,11 +47,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: get version and conventional
         id: check-version
-        uses: convention-change/conventional-version-check@v1.2.0 # or change to latest version
+        uses: convention-change/conventional-version-check@v1.4.0 # or change to latest version
         with:
           sha-length: 8
 
