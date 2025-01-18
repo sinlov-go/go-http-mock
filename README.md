@@ -163,7 +163,7 @@ $ make init dep
 - test code
 
 ```bash
-$ make test testBenchmark
+$ make test test.go.benchmark
 ```
 
 add main.go file and run
