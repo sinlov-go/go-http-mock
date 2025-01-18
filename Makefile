@@ -8,7 +8,7 @@ ROOT_NAME ?=go-http-mock
 
 ## MakeDocker.mk settings start
 ROOT_OWNER ?=sinlov-go
-ROOT_PARENT_SWITCH_TAG =1.19.12-bullseye
+ROOT_PARENT_SWITCH_TAG =1.22.11
 # for image local build
 INFO_TEST_BUILD_DOCKER_PARENT_IMAGE =golang
 # for image running

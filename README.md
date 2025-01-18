@@ -82,8 +82,8 @@ $ echo "go mod vendor"
 
 ## env
 
-- minimum go version: go 1.19
-- change `go 1.19`, `^1.19`, `1.19.12-bullseye`, `1.19.12` to new go version
+- minimum go version: go 1.22
+- change `go 1.22`, `^1.22`, `1.22.11` to new go version
 
 ### libs
 

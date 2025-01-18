@@ -3,7 +3,7 @@
 # Author: sinlov
 # dockerfile offical document https://docs.docker.com/engine/reference/builder/
 # https://hub.docker.com/_/golang
-FROM golang:1.19.12-bullseye as builder
+FROM golang:1.22.11 as builder
 
 ARG GO_ENV_PACKAGE_NAME=github.com/sinlov-go/go-http-mock
 ARG GO_ENV_ROOT_BUILD_BIN_NAME=go-http-mock
