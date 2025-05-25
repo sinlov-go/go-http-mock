@@ -3,7 +3,7 @@ module github.com/sinlov-go/go-http-mock
 go 1.22
 
 require (
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.10.1
 	github.com/sebdah/goldie/v2 v2.5.5
 	github.com/stretchr/testify v1.10.0
 )
