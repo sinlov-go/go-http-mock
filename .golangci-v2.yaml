@@ -43,6 +43,7 @@ linters:
     - unparam
     - varnamelen
     - wrapcheck
+    - wastedassign
 
 formatters:
   # Enable specific formatter.

@@ -257,6 +257,7 @@ func makeRequest(method, mime, api string, param interface{}) (request *http.Req
 			return
 		}
 		contentBuffer = bytes.NewBuffer(jsonBytes)
+		//nolint: unconvert
 		request, err = http.NewRequest(string(method), finalApi, contentBuffer)
 		if err != nil {
 			return
