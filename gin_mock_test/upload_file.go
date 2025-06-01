@@ -3,13 +3,14 @@ package gin_mock_test
 import (
 	"bytes"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"io"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 const (
@@ -229,6 +230,7 @@ func parseFromHead(readData []byte, readTotal int, boundary []byte, stream io.Re
 			continue
 		}
 		fileHeadLoc += startLoc
+		//nolint: wastedassign
 		ret := false
 		fileHeader, ret = parseUploadFileHeader(readData[startLoc:fileHeadLoc])
 		if !ret {
