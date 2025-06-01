@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -13,6 +12,8 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/gin-gonic/gin"
 )
 
 const (
@@ -24,6 +25,8 @@ const (
 //   - router: gin.Engine
 //   - baseUrl: is the base url of the server, will trim the last "/"
 //   - url: is the url of the request
+//
+// nolint: thelper
 func NewGinMock(t *testing.T, router *gin.Engine, baseUrl string, url string) GinMock {
 
 	baseUrl = strings.TrimSuffix(baseUrl, "/")
@@ -269,6 +272,7 @@ func makeRequest(method, mime, api string, param interface{}) (request *http.Req
 			buffer = bytes.NewReader([]byte(queryStr))
 		}
 
+		//nolint: unconvert
 		request, err = http.NewRequest(string(method), finalApi, buffer)
 		if err != nil {
 			return
@@ -323,6 +327,7 @@ func makeFileRequest(method, api, fileName, fieldName string, param interface{})
 	if queryStr != "" {
 		finalApi += "?" + queryStr
 	}
+	//nolint: unconvert
 	request, err = http.NewRequest(string(method), finalApi, buf)
 	if err != nil {
 		return
@@ -342,10 +347,11 @@ func mockQueryStrFrom(params interface{}) (result string) {
 	}
 	value := reflect.ValueOf(params)
 
+	//nolint: exhaustive
 	switch value.Kind() {
 	case reflect.Struct:
 		var formName string
-		for i := 0; i < value.NumField(); i++ {
+		for i := range value.NumField() {
 			if formName = value.Type().Field(i).Tag.Get("form"); formName == "" {
 				// don't tag the form name, use camel name
 				formName = getCamelNameFrom(value.Type().Field(i).Name)
@@ -371,6 +377,7 @@ func mockQueryStrFrom(params interface{}) (result string) {
 //	get the Camel name of the original name
 func getCamelNameFrom(name string) string {
 	result := ""
+	//notlint: wastedassign
 	i := 0
 	j := 0
 	r := []rune(name)
