@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/gin-gonic/gin v1.10.1
-	github.com/sebdah/goldie/v2 v2.5.5
+	github.com/sebdah/goldie/v2 v2.7.1
 	github.com/stretchr/testify v1.10.0
 )
 
