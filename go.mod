@@ -4,7 +4,7 @@ go 1.23.0
 
 require (
 	github.com/gin-gonic/gin v1.11.0
-	github.com/sebdah/goldie/v2 v2.7.1
+	github.com/sebdah/goldie/v2 v2.8.0
 	github.com/stretchr/testify v1.11.1
 )
 
